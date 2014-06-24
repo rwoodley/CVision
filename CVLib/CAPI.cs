@@ -9,18 +9,54 @@ namespace CVLib
 {
     public class CAPI
     {
-        public enum ImageMode { Gaussian = 1, Grayscale, ColorMap, Histogram, Canny } 
+        public enum ImageMode { None = 0, Grayscale, ColorMap, Histogram }
+        public enum BlurMode { None = 0, Blur = 1, Gaussian = 2, Median = 3, BiLateral = 4 }
 
         [DllImport("FaceRecognition.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern bool ModifyPictureColor(String c_inputPath, String c_outputPath, int color);
 
         [DllImport("FaceRecognition.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public static extern int ModifyPictureMode(String c_inputPath, String c_outputPath, int mode);
+        public static extern int ModifyPictureMode(String c_inputPath, String c_outputPath, int mode, int cmmode);
 
         [DllImport("FaceRecognition.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern int HandleVideoFrame(String c_outputPath, double scaleFactor);
+
+        [DllImport("FaceRecognition.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern void ModifyPictureMorph(String c_inputPath, String c_outputPath, int morphMode, int element, int kernelSize, int threshold);
+
+        [DllImport("FaceRecognition.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern void ModifyPictureBool(String c_inputPath1, String c_inputPath2, String c_outputPath, int bMode);
+
+        [DllImport("FaceRecognition.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern void ModifyPictureBlur(String c_inputPath, String c_outputPath, int bMode, int kernelSize);
+
+        [DllImport("FaceRecognition.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern void ModifyPictureContours(String c_inputPath, String c_outputPath, bool drawItems, int mode);
+
+        public enum BooleanMode { AND = 1, OR, XOR, SUBTRACT, ADD, CONTOURS, ROTATIONPOINTS }
+        public enum MorphStructureEnum { MORPH_RECT=0, MORPH_CROSS=1, MORPH_ELLIPSE=2, ONES = 3 };
+        public enum MorphMode
+        {
+            NONE = 0,
+            ERODE = 1,
+            DILATE = 2,
+            OPEN = 3,
+            CLOSE = 4,
+            GRADIENT = 5,
+            TOPHAT = 6,
+            BLACKHAT = 7,
+            NOT = 8,
+            SOBELX = 9,
+            SOBELY = 10,
+            LAPLACIAN = 11,
+            SCHARRX1 = 12,
+            SCHARRY1 = 13,
+            CANNY = 14,
+            THRESHOLD = 15
+        }
         public enum ImageColor
         {
+            NONE = -1,
             CV_BGR2BGRA    =0,
             CV_BGRA2BGR    =1,
             CV_BGR2RGBA    =2,
@@ -181,6 +217,21 @@ namespace CVLib
             CV_BayerRG2BGR_EA = 129,
             CV_BayerGR2BGR_EA = 130,
 
+        }
+        public enum ColorMap
+        {
+            COLORMAP_AUTUMN = 0,
+            COLORMAP_BONE = 1,
+            COLORMAP_JET = 2,
+            COLORMAP_WINTER = 3,
+            COLORMAP_RAINBOW = 4,
+            COLORMAP_OCEAN = 5,
+            COLORMAP_SUMMER = 6,
+            COLORMAP_SPRING = 7,
+            COLORMAP_COOL = 8,
+            COLORMAP_HSV = 9,
+            COLORMAP_PINK = 10,
+            COLORMAP_HOT = 11
         }
     }
 }

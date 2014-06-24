@@ -32,13 +32,50 @@ namespace CVLib
             else
                 return null;
         }
-        public Image ModPicMode(Image img, int mode)
+        public Image ModPicMode(Image img, CAPI.ImageMode mode, CAPI.ColorMap cmmode)
+        {
+            if (mode == CAPI.ImageMode.None) return null;
+            String inPath = getUPath();
+            img.Save(inPath);
+            String outPath = getUPath();
+            CAPI.ModifyPictureMode(inPath, outPath, (int) mode, (int) cmmode);
+            return Image.FromFile(outPath);
+        }
+        public Image ModPicMorph(Image img, CAPI.MorphMode mode, CAPI.MorphStructureEnum stelem, int kernelSize, int threshold)
         {
             String inPath = getUPath();
             img.Save(inPath);
             String outPath = getUPath();
-            CAPI.ModifyPictureMode(inPath, outPath, mode);
+            CAPI.ModifyPictureMorph(inPath, outPath, (int) mode, (int) stelem, kernelSize, threshold);
             return Image.FromFile(outPath);
+        }
+        public Image ModPicBlur(Image img, CAPI.BlurMode mode, int kernelSize)
+        {
+            String inPath = getUPath();
+            img.Save(inPath);
+            String outPath = getUPath();
+            CAPI.ModifyPictureBlur(inPath, outPath, (int)mode, (int)kernelSize);
+            return Image.FromFile(outPath);
+        }
+        public Image ModPicBoolean(Image img1, Image img2, CAPI.BooleanMode bmode, bool drawArtifacts)
+        {
+            if (img1 == null || img2 == null) return null;
+            String inPath1 = getUPath();
+            img1.Save(inPath1);
+            String inPath2 = getUPath();
+            img2.Save(inPath2);
+            String outPath = getUPath();
+            if (bmode == CAPI.BooleanMode.CONTOURS)
+            {
+                CAPI.ModifyPictureContours(inPath2, outPath, drawArtifacts, 1);
+            }
+            else if (bmode == CAPI.BooleanMode.ROTATIONPOINTS)
+            {
+                CAPI.ModifyPictureContours(inPath2, outPath, drawArtifacts, 2);
+            }
+            else
+                CAPI.ModifyPictureBool(inPath1, inPath2, outPath, (int)bmode);
+            return System.IO.File.Exists(outPath) ? Image.FromFile(outPath) : null;
         }
         public Image SnapPic()
         {
