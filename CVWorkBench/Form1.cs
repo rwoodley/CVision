@@ -15,12 +15,14 @@ namespace CVWorkBench
     public partial class Form1 : Form
     {
         CVLib.CVMan _CVMan;
+        RecipeMan _recipeMan;
         Action<Image> _delegate;
         public Form1()
         {
             InitializeComponent();
             this.Size = new Size(1450,750);        // why is this needed?
             _CVMan = new CVMan(".\\");
+            _recipeMan = new RecipeMan(_CVMan);
             //_CVMan.StartVideoStream(showImage);
             _delegate = showImage;
             foreach (CAPI.ImageMode mode in Enum.GetValues(typeof(CAPI.ImageMode)))
@@ -40,6 +42,10 @@ namespace CVWorkBench
             foreach (var blurmode in Enum.GetValues(typeof(CAPI.BlurMode)))
                 blurComboBox.Properties.Items.Add(blurmode.ToString());
 
+            foreach (var recipeNo in Enum.GetValues(typeof(RecipeMan.Recipes)))
+                recipeCompboBox.Properties.Items.Add(recipeNo.ToString());
+            recipeCompboBox.SelectedIndex = 0;
+
             pictureEdit1.Properties.ShowZoomSubMenu = DevExpress.Utils.DefaultBoolean.True;
             pictureEdit2.Properties.ShowZoomSubMenu = DevExpress.Utils.DefaultBoolean.True;
             pictureEdit3.Properties.ShowZoomSubMenu = DevExpress.Utils.DefaultBoolean.True;
@@ -57,6 +63,8 @@ namespace CVWorkBench
             booleanComboBox.SelectedIndex = 0;
             blurComboBox.SelectedIndex = 0;
             kernelSizeEdit.EditValue = 7;
+            inputDirectoryEdit.EditValue = "InputImages";
+            outputDirectoryTextEdit.EditValue = "OutputImages";
         }
         private String getImageText(System.Drawing.Image img) {
             if (img == null) return "null";
@@ -189,90 +197,48 @@ namespace CVWorkBench
                 blurComboBox_SelectedIndexChanged(null, null);
         }
 
-        private void simpleButton3_Click(object sender, EventArgs e)
-        {
-            var result = TrimImage1(pictureEdit1.Image, true);
-            SetModImage(result);
-        }
-        private void simpleButton5_Click(object sender, EventArgs e)
-        {
-            var result = TrimImage2(pictureEdit1.Image, true);
-            SetModImage(result);
-
-        }
-        private void simpleButton6_Click(object sender, EventArgs e)
-        {
-            var result = TrimImage3(pictureEdit1.Image, true);
-            SetModImage(result);
-        }
-        private void simpleButton7_Click(object sender, EventArgs e)
-        {
-            var result = TrimImage4(pictureEdit1.Image, true);
-            SetModImage(result);
-        }
-
-        private Image TrimImage1(Image img1, bool maskOnly)
-        {
-            Image img = _CVMan.ModPicMode(img1, CAPI.ImageMode.Grayscale, CAPI.ColorMap.COLORMAP_AUTUMN);
-            img = _CVMan.ModPicMode(img1, CAPI.ImageMode.Histogram, CAPI.ColorMap.COLORMAP_AUTUMN);
-            img = _CVMan.ModPicMorph(img, CAPI.MorphMode.THRESHOLD, CAPI.MorphStructureEnum.MORPH_CROSS, 0, 200);
-            img = _CVMan.ModPicBlur(img, CAPI.BlurMode.Median, 27);
-            img = _CVMan.ModPicMorph(img, CAPI.MorphMode.DILATE, CAPI.MorphStructureEnum.MORPH_ELLIPSE, 17, 0);
-            img = _CVMan.ModPicMorph(img, CAPI.MorphMode.ERODE, CAPI.MorphStructureEnum.MORPH_ELLIPSE, 7, 0);
-            Image mask = _CVMan.ModPicBoolean(img, img, CAPI.BooleanMode.CONTOURS, false);
-            mask = _CVMan.ModPicBlur(mask, CAPI.BlurMode.Median, 27);
-            Image result = _CVMan.ModPicBoolean(img1, mask, CAPI.BooleanMode.AND, false);
-
-            return maskOnly ? mask : result;
-        }
-        private Image TrimImage2(Image img1, bool maskOnly)
-        {
-            // The above works in many cases, but not all. Futher cleanup:
-            Image result = _CVMan.ModPicMode(img1, CAPI.ImageMode.Histogram, CAPI.ColorMap.COLORMAP_AUTUMN);
-            result = _CVMan.ModPicMorph(result, CAPI.MorphMode.THRESHOLD, CAPI.MorphStructureEnum.MORPH_CROSS, 0, 200);
-            result = _CVMan.ModPicMorph(result, CAPI.MorphMode.ERODE, CAPI.MorphStructureEnum.MORPH_ELLIPSE, 23, 0);
-            result = _CVMan.ModPicMorph(result, CAPI.MorphMode.DILATE, CAPI.MorphStructureEnum.MORPH_ELLIPSE, 23, 0);
-            Image mask = _CVMan.ModPicBoolean(result, result, CAPI.BooleanMode.CONTOURS, false);
-            result = _CVMan.ModPicBoolean(img1, mask, CAPI.BooleanMode.AND, false);
-
-            return maskOnly ? mask : result;
-        }
-        private Image TrimImage3(Image img1, bool maskOnly)
-        {
-            // The above works in many cases, but not all. Futher cleanup:
-            Image result = _CVMan.ModPicMode(img1, CAPI.ImageMode.Histogram, CAPI.ColorMap.COLORMAP_AUTUMN);
-            Image mask = _CVMan.ModPicMorph(result, CAPI.MorphMode.THRESHOLD, CAPI.MorphStructureEnum.MORPH_CROSS, 0, 160);
-            mask = _CVMan.ModPicMorph(mask, CAPI.MorphMode.DILATE, CAPI.MorphStructureEnum.MORPH_ELLIPSE, 17, 0);
-            mask = _CVMan.ModPicBlur(mask, CAPI.BlurMode.Median, 17);
-            mask = _CVMan.ModPicMorph(mask, CAPI.MorphMode.ERODE, CAPI.MorphStructureEnum.MORPH_ELLIPSE, 13, 0);
-            mask = _CVMan.ModPicBoolean(mask, mask, CAPI.BooleanMode.CONTOURS, false);
-            result = _CVMan.ModPicBoolean(img1, mask, CAPI.BooleanMode.AND, false);
-
-            return maskOnly ? mask : result;
-        }
-        private Image TrimImage4(Image img1, bool maskOnly)
-        {
-            Image mask = _CVMan.ModPicMode(img1, CAPI.ImageMode.Histogram, CAPI.ColorMap.COLORMAP_AUTUMN);
-            mask = _CVMan.ModPicMorph(mask, CAPI.MorphMode.ERODE, CAPI.MorphStructureEnum.MORPH_ELLIPSE, 13, 0);
-            mask = _CVMan.ModPicMorph(mask, CAPI.MorphMode.THRESHOLD, CAPI.MorphStructureEnum.MORPH_CROSS, 0, 120);
-            mask = _CVMan.ModPicMorph(mask, CAPI.MorphMode.DILATE, CAPI.MorphStructureEnum.MORPH_ELLIPSE, 17, 0);
-            mask = _CVMan.ModPicBlur(mask, CAPI.BlurMode.Median, 17);
-            mask = _CVMan.ModPicBoolean(mask, mask, CAPI.BooleanMode.CONTOURS, false);
-            Image result = _CVMan.ModPicBoolean(img1, mask, CAPI.BooleanMode.AND, false);
-
-            return maskOnly ? mask : result;
-        }
         private void simpleButton4_Click(object sender, EventArgs e)
         {
-            foreach (string file in System.IO.Directory.EnumerateFiles("InputImages", "*.jpg"))
+            RecipeMan.Recipes selection = (RecipeMan.Recipes)Enum.Parse(typeof(RecipeMan.Recipes), (String)recipeCompboBox.EditValue);
+            if (MessageBox.Show(String.Format("Will process files in {0} using {1} recipe, writing to {2}",
+                (String)inputDirectoryEdit.EditValue,
+                selection.ToString(),
+                (String)outputDirectoryTextEdit.EditValue), "Confirm", MessageBoxButtons.OKCancel) != System.Windows.Forms.DialogResult.OK) return;
+            foreach (string file in System.IO.Directory.EnumerateFiles((String) inputDirectoryEdit.EditValue, "*.jpg"))
             {
                 Image img = Image.FromFile(file);
-                Image outimg = TrimImage4(img, false);
-                //Image mask = TrimImage3(outimg, true);
-                //mask = TrimImage1(outimg, true);
-                //Image result = _CVMan.ModPicBoolean(img, mask, CAPI.BooleanMode.AND);
+                Image outimg = _recipeMan.runRecipe(selection, img, false);
+                outimg.Save(outputDirectoryTextEdit.EditValue + "/" + System.IO.Path.GetFileName(file));
+            }
+        }
 
-                outimg.Save("OutputImages/" + System.IO.Path.GetFileName(file));
+        private void oneTimeButton_Click(object sender, EventArgs e)
+        {
+            RecipeMan.Recipes selection = (RecipeMan.Recipes)Enum.Parse(typeof(RecipeMan.Recipes), (String)recipeCompboBox.EditValue);
+            SetModImage(_recipeMan.runRecipe(selection, pictureEdit1.Image, true));
+        }
+
+        private void inputDirectoryButton_Click(object sender, EventArgs e)
+        {
+            using (FolderBrowserDialog dlg = new FolderBrowserDialog())
+            {
+                dlg.Description = "Select a folder";
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    inputDirectoryEdit.EditValue = dlg.SelectedPath;
+                }
+            }
+        }
+
+        private void outputDirectoryButton_Click(object sender, EventArgs e)
+        {
+            using (FolderBrowserDialog dlg = new FolderBrowserDialog())
+            {
+                dlg.Description = "Select a folder";
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    outputDirectoryTextEdit.EditValue = dlg.SelectedPath;
+                }
             }
         }
 

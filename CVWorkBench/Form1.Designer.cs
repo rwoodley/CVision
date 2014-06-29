@@ -55,11 +55,14 @@
             this.sizeLabel3 = new DevExpress.XtraEditors.LabelControl();
             this.thresholdEdit = new DevExpress.XtraEditors.TextEdit();
             this.labelControl7 = new DevExpress.XtraEditors.LabelControl();
-            this.simpleButton3 = new DevExpress.XtraEditors.SimpleButton();
-            this.simpleButton4 = new DevExpress.XtraEditors.SimpleButton();
-            this.simpleButton5 = new DevExpress.XtraEditors.SimpleButton();
-            this.simpleButton6 = new DevExpress.XtraEditors.SimpleButton();
-            this.simpleButton7 = new DevExpress.XtraEditors.SimpleButton();
+            this.submitBatchButton = new DevExpress.XtraEditors.SimpleButton();
+            this.recipeCompboBox = new DevExpress.XtraEditors.ComboBoxEdit();
+            this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
+            this.outputDirectoryButton = new DevExpress.XtraEditors.SimpleButton();
+            this.inputDirectoryButton = new DevExpress.XtraEditors.SimpleButton();
+            this.outputDirectoryTextEdit = new DevExpress.XtraEditors.TextEdit();
+            this.inputDirectoryEdit = new DevExpress.XtraEditors.TextEdit();
+            this.oneTimeButton = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureEdit1.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureEdit2.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.modeComboBox.Properties)).BeginInit();
@@ -73,6 +76,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.blurComboBox.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.kernelSizeEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.thresholdEdit.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.recipeCompboBox.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
+            this.groupControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.outputDirectoryTextEdit.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.inputDirectoryEdit.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureEdit1
@@ -315,61 +323,87 @@
             this.labelControl7.TabIndex = 27;
             this.labelControl7.Text = "Threshold (0-255):";
             // 
-            // simpleButton3
+            // submitBatchButton
             // 
-            this.simpleButton3.Location = new System.Drawing.Point(12, 418);
-            this.simpleButton3.Name = "simpleButton3";
-            this.simpleButton3.Size = new System.Drawing.Size(151, 23);
-            this.simpleButton3.TabIndex = 28;
-            this.simpleButton3.Text = "Trim Image 1";
-            this.simpleButton3.Click += new System.EventHandler(this.simpleButton3_Click);
+            this.submitBatchButton.Location = new System.Drawing.Point(8, 95);
+            this.submitBatchButton.Name = "submitBatchButton";
+            this.submitBatchButton.Size = new System.Drawing.Size(174, 23);
+            this.submitBatchButton.TabIndex = 29;
+            this.submitBatchButton.Text = "BatchMode";
+            this.submitBatchButton.Click += new System.EventHandler(this.simpleButton4_Click);
             // 
-            // simpleButton4
+            // recipeCompboBox
             // 
-            this.simpleButton4.Location = new System.Drawing.Point(12, 587);
-            this.simpleButton4.Name = "simpleButton4";
-            this.simpleButton4.Size = new System.Drawing.Size(151, 23);
-            this.simpleButton4.TabIndex = 29;
-            this.simpleButton4.Text = "BatchMode";
-            this.simpleButton4.Click += new System.EventHandler(this.simpleButton4_Click);
+            this.recipeCompboBox.Location = new System.Drawing.Point(7, 38);
+            this.recipeCompboBox.Name = "recipeCompboBox";
+            this.recipeCompboBox.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.recipeCompboBox.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            this.recipeCompboBox.Size = new System.Drawing.Size(175, 22);
+            this.recipeCompboBox.TabIndex = 33;
             // 
-            // simpleButton5
+            // groupControl1
             // 
-            this.simpleButton5.Location = new System.Drawing.Point(13, 463);
-            this.simpleButton5.Name = "simpleButton5";
-            this.simpleButton5.Size = new System.Drawing.Size(151, 23);
-            this.simpleButton5.TabIndex = 30;
-            this.simpleButton5.Text = "Trim Image 2";
-            this.simpleButton5.Click += new System.EventHandler(this.simpleButton5_Click);
+            this.groupControl1.Controls.Add(this.outputDirectoryButton);
+            this.groupControl1.Controls.Add(this.inputDirectoryButton);
+            this.groupControl1.Controls.Add(this.outputDirectoryTextEdit);
+            this.groupControl1.Controls.Add(this.inputDirectoryEdit);
+            this.groupControl1.Controls.Add(this.oneTimeButton);
+            this.groupControl1.Controls.Add(this.submitBatchButton);
+            this.groupControl1.Controls.Add(this.recipeCompboBox);
+            this.groupControl1.Location = new System.Drawing.Point(-3, 424);
+            this.groupControl1.Name = "groupControl1";
+            this.groupControl1.Size = new System.Drawing.Size(186, 258);
+            this.groupControl1.TabIndex = 35;
+            this.groupControl1.Text = "Recipes";
             // 
-            // simpleButton6
+            // outputDirectoryButton
             // 
-            this.simpleButton6.Location = new System.Drawing.Point(13, 501);
-            this.simpleButton6.Name = "simpleButton6";
-            this.simpleButton6.Size = new System.Drawing.Size(151, 23);
-            this.simpleButton6.TabIndex = 31;
-            this.simpleButton6.Text = "Trim Image 3";
-            this.simpleButton6.Click += new System.EventHandler(this.simpleButton6_Click);
+            this.outputDirectoryButton.Location = new System.Drawing.Point(7, 175);
+            this.outputDirectoryButton.Name = "outputDirectoryButton";
+            this.outputDirectoryButton.Size = new System.Drawing.Size(173, 23);
+            this.outputDirectoryButton.TabIndex = 40;
+            this.outputDirectoryButton.Text = "Output Directory:";
+            this.outputDirectoryButton.Click += new System.EventHandler(this.outputDirectoryButton_Click);
             // 
-            // simpleButton7
+            // inputDirectoryButton
             // 
-            this.simpleButton7.Location = new System.Drawing.Point(13, 541);
-            this.simpleButton7.Name = "simpleButton7";
-            this.simpleButton7.Size = new System.Drawing.Size(151, 23);
-            this.simpleButton7.TabIndex = 32;
-            this.simpleButton7.Text = "Trim Image 4";
-            this.simpleButton7.Click += new System.EventHandler(this.simpleButton7_Click);
+            this.inputDirectoryButton.Location = new System.Drawing.Point(8, 124);
+            this.inputDirectoryButton.Name = "inputDirectoryButton";
+            this.inputDirectoryButton.Size = new System.Drawing.Size(173, 23);
+            this.inputDirectoryButton.TabIndex = 39;
+            this.inputDirectoryButton.Text = "Input Directory:";
+            this.inputDirectoryButton.Click += new System.EventHandler(this.inputDirectoryButton_Click);
+            // 
+            // outputDirectoryTextEdit
+            // 
+            this.outputDirectoryTextEdit.Location = new System.Drawing.Point(7, 198);
+            this.outputDirectoryTextEdit.Name = "outputDirectoryTextEdit";
+            this.outputDirectoryTextEdit.Size = new System.Drawing.Size(174, 22);
+            this.outputDirectoryTextEdit.TabIndex = 38;
+            // 
+            // inputDirectoryEdit
+            // 
+            this.inputDirectoryEdit.Location = new System.Drawing.Point(8, 147);
+            this.inputDirectoryEdit.Name = "inputDirectoryEdit";
+            this.inputDirectoryEdit.Size = new System.Drawing.Size(174, 22);
+            this.inputDirectoryEdit.TabIndex = 36;
+            // 
+            // oneTimeButton
+            // 
+            this.oneTimeButton.Location = new System.Drawing.Point(8, 66);
+            this.oneTimeButton.Name = "oneTimeButton";
+            this.oneTimeButton.Size = new System.Drawing.Size(174, 23);
+            this.oneTimeButton.TabIndex = 34;
+            this.oneTimeButton.Text = "One Time";
+            this.oneTimeButton.Click += new System.EventHandler(this.oneTimeButton_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1860, 865);
-            this.Controls.Add(this.simpleButton7);
-            this.Controls.Add(this.simpleButton6);
-            this.Controls.Add(this.simpleButton5);
-            this.Controls.Add(this.simpleButton4);
-            this.Controls.Add(this.simpleButton3);
+            this.Controls.Add(this.groupControl1);
             this.Controls.Add(this.thresholdEdit);
             this.Controls.Add(this.labelControl7);
             this.Controls.Add(this.sizeLabel3);
@@ -412,6 +446,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.blurComboBox.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.kernelSizeEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.thresholdEdit.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.recipeCompboBox.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
+            this.groupControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.outputDirectoryTextEdit.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.inputDirectoryEdit.Properties)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -446,11 +485,14 @@
         private DevExpress.XtraEditors.LabelControl sizeLabel3;
         private DevExpress.XtraEditors.TextEdit thresholdEdit;
         private DevExpress.XtraEditors.LabelControl labelControl7;
-        private DevExpress.XtraEditors.SimpleButton simpleButton3;
-        private DevExpress.XtraEditors.SimpleButton simpleButton4;
-        private DevExpress.XtraEditors.SimpleButton simpleButton5;
-        private DevExpress.XtraEditors.SimpleButton simpleButton6;
-        private DevExpress.XtraEditors.SimpleButton simpleButton7;
+        private DevExpress.XtraEditors.SimpleButton submitBatchButton;
+        private DevExpress.XtraEditors.ComboBoxEdit recipeCompboBox;
+        private DevExpress.XtraEditors.GroupControl groupControl1;
+        private DevExpress.XtraEditors.SimpleButton outputDirectoryButton;
+        private DevExpress.XtraEditors.SimpleButton inputDirectoryButton;
+        private DevExpress.XtraEditors.TextEdit outputDirectoryTextEdit;
+        private DevExpress.XtraEditors.TextEdit inputDirectoryEdit;
+        private DevExpress.XtraEditors.SimpleButton oneTimeButton;
     }
 }
 

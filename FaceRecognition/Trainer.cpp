@@ -234,11 +234,37 @@ extern "C" {
 
 					findContours( outImg, contours, hierarchy, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
 					Mat drawing4 = Mat::zeros( img.size(), CV_8UC3 );
+					vector<Point2f> rotationPoints;
+					Point2f leftmostPoint;
+					int leftmostPointIndex = -1;
 					for( int i = 0; i< contours.size(); i++ )
 					{
 						Moments mu = moments(contours[i], false);
 						Point2f massCenter = Point2f( mu.m10/mu.m00 , mu.m01/mu.m00 );
+						rotationPoints.push_back(massCenter);
+						if (leftmostPointIndex == -1 || massCenter.x < leftmostPoint.x) {
+							leftmostPoint = massCenter;
+							leftmostPointIndex = i;
+						}
 						circle( drawing4, massCenter, 10, Scalar( 255,0,0), -1, 8, 0 );	// mass centers are our points.
+					}
+					if (rotationPoints.size() == 2) {
+						float angle = 90;
+						if (rotationPoints[0].x != rotationPoints[1].x) {
+							angle = atan((rotationPoints[0].y - rotationPoints[1].y)/(rotationPoints[0].x - rotationPoints[1].x));
+							angle = 180*angle/3.1415;
+						}
+						float distance = sqrt(
+							pow(rotationPoints[0].x - rotationPoints[1].x, 2) +
+							pow(rotationPoints[0].y - rotationPoints[1].y, 2));
+						if (distance > 0) {
+							float factor = cols/distance;
+							Mat r = getRotationMatrix2D(leftmostPoint, angle, 1.0);
+							warpAffine(drawing4, drawing4, r, Size(factor*cols, factor*rows));
+						}
+						//if (distance > 0) {
+						//	resize(drawing4, drawing4, Size(), cols/distance, cols/distance);
+						//}
 					}
 					imwrite(outFileName, drawing4);
 				}
