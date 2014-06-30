@@ -63,6 +63,7 @@
             this.outputDirectoryTextEdit = new DevExpress.XtraEditors.TextEdit();
             this.inputDirectoryEdit = new DevExpress.XtraEditors.TextEdit();
             this.oneTimeButton = new DevExpress.XtraEditors.SimpleButton();
+            this.onetimeFileNameEdit = new DevExpress.XtraEditors.TextEdit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureEdit1.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureEdit2.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.modeComboBox.Properties)).BeginInit();
@@ -81,6 +82,7 @@
             this.groupControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.outputDirectoryTextEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.inputDirectoryEdit.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.onetimeFileNameEdit.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureEdit1
@@ -325,7 +327,7 @@
             // 
             // submitBatchButton
             // 
-            this.submitBatchButton.Location = new System.Drawing.Point(8, 95);
+            this.submitBatchButton.Location = new System.Drawing.Point(8, 128);
             this.submitBatchButton.Name = "submitBatchButton";
             this.submitBatchButton.Size = new System.Drawing.Size(174, 23);
             this.submitBatchButton.TabIndex = 29;
@@ -344,6 +346,7 @@
             // 
             // groupControl1
             // 
+            this.groupControl1.Controls.Add(this.onetimeFileNameEdit);
             this.groupControl1.Controls.Add(this.outputDirectoryButton);
             this.groupControl1.Controls.Add(this.inputDirectoryButton);
             this.groupControl1.Controls.Add(this.outputDirectoryTextEdit);
@@ -359,7 +362,7 @@
             // 
             // outputDirectoryButton
             // 
-            this.outputDirectoryButton.Location = new System.Drawing.Point(7, 175);
+            this.outputDirectoryButton.Location = new System.Drawing.Point(7, 208);
             this.outputDirectoryButton.Name = "outputDirectoryButton";
             this.outputDirectoryButton.Size = new System.Drawing.Size(173, 23);
             this.outputDirectoryButton.TabIndex = 40;
@@ -368,7 +371,7 @@
             // 
             // inputDirectoryButton
             // 
-            this.inputDirectoryButton.Location = new System.Drawing.Point(8, 124);
+            this.inputDirectoryButton.Location = new System.Drawing.Point(8, 157);
             this.inputDirectoryButton.Name = "inputDirectoryButton";
             this.inputDirectoryButton.Size = new System.Drawing.Size(173, 23);
             this.inputDirectoryButton.TabIndex = 39;
@@ -377,14 +380,14 @@
             // 
             // outputDirectoryTextEdit
             // 
-            this.outputDirectoryTextEdit.Location = new System.Drawing.Point(7, 198);
+            this.outputDirectoryTextEdit.Location = new System.Drawing.Point(7, 231);
             this.outputDirectoryTextEdit.Name = "outputDirectoryTextEdit";
             this.outputDirectoryTextEdit.Size = new System.Drawing.Size(174, 22);
             this.outputDirectoryTextEdit.TabIndex = 38;
             // 
             // inputDirectoryEdit
             // 
-            this.inputDirectoryEdit.Location = new System.Drawing.Point(8, 147);
+            this.inputDirectoryEdit.Location = new System.Drawing.Point(8, 180);
             this.inputDirectoryEdit.Name = "inputDirectoryEdit";
             this.inputDirectoryEdit.Size = new System.Drawing.Size(174, 22);
             this.inputDirectoryEdit.TabIndex = 36;
@@ -397,6 +400,15 @@
             this.oneTimeButton.TabIndex = 34;
             this.oneTimeButton.Text = "One Time";
             this.oneTimeButton.Click += new System.EventHandler(this.oneTimeButton_Click);
+            // 
+            // onetimeFileNameEdit
+            // 
+            this.onetimeFileNameEdit.EditValue = "Default.jpg";
+            this.onetimeFileNameEdit.Location = new System.Drawing.Point(8, 90);
+            this.onetimeFileNameEdit.Name = "onetimeFileNameEdit";
+            this.onetimeFileNameEdit.Size = new System.Drawing.Size(174, 22);
+            this.onetimeFileNameEdit.TabIndex = 41;
+            this.onetimeFileNameEdit.EditValueChanged += new System.EventHandler(this.onetimeFileNameEdit_EditValueChanged);
             // 
             // Form1
             // 
@@ -451,6 +463,7 @@
             this.groupControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.outputDirectoryTextEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.inputDirectoryEdit.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.onetimeFileNameEdit.Properties)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -493,6 +506,7 @@
         private DevExpress.XtraEditors.TextEdit outputDirectoryTextEdit;
         private DevExpress.XtraEditors.TextEdit inputDirectoryEdit;
         private DevExpress.XtraEditors.SimpleButton oneTimeButton;
+        private DevExpress.XtraEditors.TextEdit onetimeFileNameEdit;
     }
 }
 

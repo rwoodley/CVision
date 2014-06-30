@@ -33,7 +33,7 @@ namespace CVLib
         [DllImport("FaceRecognition.dll", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         public static extern void ModifyPictureContours(String c_inputPath, String c_outputPath, bool drawItems, int mode);
 
-        public enum BooleanMode { AND = 1, OR, XOR, SUBTRACT, ADD, CONTOURS, ROTATIONPOINTS }
+        public enum BooleanMode { AND = 1, OR, XOR, SUBTRACT, ADD, CONTOURS, ROTATIONPOINTS, ROTATE_RESIZE }
         public enum MorphStructureEnum { MORPH_RECT=0, MORPH_CROSS=1, MORPH_ELLIPSE=2, ONES = 3 };
         public enum MorphMode
         {

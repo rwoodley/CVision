@@ -49,7 +49,7 @@ namespace CVWorkBench
             pictureEdit1.Properties.ShowZoomSubMenu = DevExpress.Utils.DefaultBoolean.True;
             pictureEdit2.Properties.ShowZoomSubMenu = DevExpress.Utils.DefaultBoolean.True;
             pictureEdit3.Properties.ShowZoomSubMenu = DevExpress.Utils.DefaultBoolean.True;
-            if (System.IO.File.Exists("Default.jpg")) SetMainImage(Image.FromFile("Default.jpg"));
+            SetMainImage();
 
             morphModeComboBox.SelectedIndex = 0;
             structuringElementComboBox.SelectedIndex = 0;
@@ -70,6 +70,11 @@ namespace CVWorkBench
             if (img == null) return "null";
             return String.Format("{0}x{1}. {2}",
                 img.Size.Height.ToString(), img.Size.Width.ToString(), img.PixelFormat, Image.GetPixelFormatSize(img.PixelFormat));
+        }
+        private void SetMainImage()
+        {
+            String fileName = (String) onetimeFileNameEdit.EditValue;
+            if (System.IO.File.Exists(fileName)) SetMainImage(Image.FromFile(fileName));
         }
         private void SetMainImage(Image img)
         {
@@ -240,6 +245,11 @@ namespace CVWorkBench
                     outputDirectoryTextEdit.EditValue = dlg.SelectedPath;
                 }
             }
+        }
+
+        private void onetimeFileNameEdit_EditValueChanged(object sender, EventArgs e)
+        {
+            SetMainImage();
         }
 
 

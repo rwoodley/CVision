@@ -150,9 +150,10 @@ extern "C" {
 	}
 	__declspec(dllexport) void ModifyPictureContours(char * inFileName, char * outFileName, bool drawItems, int mode) {
 		String filename = string(inFileName);
-		Mat img = imread(filename);
-		int chan = img.channels();
-		cvtColor(img,img, CV_RGB2GRAY);		// seems to be required, even if .net says only 8bpp
+		Mat originalimg = imread(filename);
+		Mat img;
+		int chan = originalimg.channels();
+		cvtColor(originalimg,img, CV_RGB2GRAY);		// seems to be required, even if .net says only 8bpp
 		chan = img.channels();
 		//bool chk = CV_MAT_TYPE(img.type)== CV_32SC1;
 		try {
@@ -167,7 +168,7 @@ extern "C" {
 			int nContours = 0;
 			// pass 1
 			float minDistanceFromCenter = 9999999;	// best blob is the on nearest the center.
-			for( int i = 0; i< contours.size(); i++ )
+			for( int i = 0; i< contours.size(); i++ )	// pass 1 to get blob nearest the center.
 			{
 				double area = contourArea(contours[i]);
 				if (area < 20000) continue;
@@ -203,9 +204,6 @@ extern "C" {
 				if (drawItems) {
 
 					// draw artifacts, for debugging only.
-					//vector<Point> contour_poly;
-					//approxPolyDP( contourMat, contour_poly, 3, true );
-
 					circle( drawing, massCenter, 10, Scalar( 255,0,0), -1, 8, 0 );
 					Rect rect = boundingRect(contourMat);
 					rectangle( drawing, rect.tl(), rect.br(), Scalar( 0,255,0), 2, 8, 0 );
@@ -248,6 +246,7 @@ extern "C" {
 						}
 						circle( drawing4, massCenter, 10, Scalar( 255,0,0), -1, 8, 0 );	// mass centers are our points.
 					}
+					
 					if (rotationPoints.size() == 2) {
 						float angle = 90;
 						if (rotationPoints[0].x != rotationPoints[1].x) {
@@ -260,7 +259,37 @@ extern "C" {
 						if (distance > 0) {
 							float factor = cols/distance;
 							Mat r = getRotationMatrix2D(leftmostPoint, angle, 1.0);
-							warpAffine(drawing4, drawing4, r, Size(factor*cols, factor*rows));
+							//warpAffine(drawing4, drawing4, r, Size(factor*cols, factor*rows));
+							//warpAffine(originalimg, drawing4, r, Size(2*cols, 2*rows));
+
+							// at this point, drawing4 has 2 blue rotation points on a black background. that is fine for mode==2.
+
+							if (mode == 3) {   // resize and rotate original image.
+
+								warpAffine(originalimg, drawing4, r, Size(cols, rows));	
+
+								int height = (int) (((float) rows/(float) cols)*distance);
+								int originalHeight = height;
+								if (leftmostPoint.y < height/2) 
+									height = 2*leftmostPoint.y;
+								else if ((rows-leftmostPoint.y) < height/2)
+									height = 2*(rows - leftmostPoint.y);
+
+								Rect rect = Rect(leftmostPoint.x, leftmostPoint.y - height/2, distance, height);
+								drawing4 = drawing4(rect).clone();
+								// at this point we have a brain with dimensions distance*height, rotated correctly.
+								// stretch to make it have width=cols. Then we'll pad as needed to preserve the original aspect ratio.
+								// note, if (height == originalHeight), then the embedded image already has the right aspect ratio.
+								// we also need to put the image at the center (vertically).
+								resize(drawing4, drawing4, Size(cols, rows * height/originalHeight)); // now image fills width of original image, aspect ratio of image is correct.
+
+								if (height < originalHeight) {	// pad y to correct aspect ratio as needed.
+									Mat paddedImage = Mat::zeros( originalimg.size(), originalimg.type() );
+									int padding = (originalHeight - height)/2;
+									drawing4.copyTo(paddedImage(Rect(0, padding, drawing4.cols, drawing4.rows)));
+									drawing4 = paddedImage;
+								}
+							}
 						}
 						//if (distance > 0) {
 						//	resize(drawing4, drawing4, Size(), cols/distance, cols/distance);

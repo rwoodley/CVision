@@ -66,13 +66,11 @@ namespace CVLib
             img2.Save(inPath2);
             String outPath = getUPath();
             if (bmode == CAPI.BooleanMode.CONTOURS)
-            {
                 CAPI.ModifyPictureContours(inPath2, outPath, drawArtifacts, 1);
-            }
             else if (bmode == CAPI.BooleanMode.ROTATIONPOINTS)
-            {
                 CAPI.ModifyPictureContours(inPath2, outPath, drawArtifacts, 2);
-            }
+            else if (bmode == CAPI.BooleanMode.ROTATE_RESIZE)
+                CAPI.ModifyPictureContours(inPath2, outPath, drawArtifacts, 3);
             else
                 CAPI.ModifyPictureBool(inPath1, inPath2, outPath, (int)bmode);
             return System.IO.File.Exists(outPath) ? Image.FromFile(outPath) : null;
