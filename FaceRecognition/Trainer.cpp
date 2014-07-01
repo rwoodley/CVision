@@ -201,6 +201,7 @@ extern "C" {
 				Mat contourMat = Mat(contours[i]);
 				Point2f center; float radius;
 				minEnclosingCircle(contourMat, center, radius);
+				radius /= 1.03; // see: http://code.opencv.org/issues/3362
 				if (drawItems) {
 
 					// draw artifacts, for debugging only.
@@ -211,7 +212,6 @@ extern "C" {
 				    Point2f rect_points[4]; rotRect.points( rect_points );
 				    for( int j = 0; j < 4; j++ )
 					    line( drawing, rect_points[j], rect_points[(j+1)%4], Scalar( 255,255,255), 1, 8 );
-					radius /= 1.03; // see: http://code.opencv.org/issues/3362
 					circle( drawing, center, (int)radius, Scalar(0,0,255), 2, 8, 0 );
 				}
 				if (mode == 1)

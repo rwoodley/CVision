@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -250,6 +251,17 @@ namespace CVWorkBench
         private void onetimeFileNameEdit_EditValueChanged(object sender, EventArgs e)
         {
             SetMainImage();
+        }
+
+        private void rotateResizeButton_Click(object sender, EventArgs e)
+        {
+            Image img = _CVMan.ModPicBoolean(null, pictureEdit1.Image, CAPI.BooleanMode.ROTATE_RESIZE, false);
+            SetModImage(img);
+        }
+
+        private void shrinkButton_Click(object sender, EventArgs e)
+        {
+            SetModImage(_CVMan.ShrinkPic(pictureEdit1.Image));
         }
 
 

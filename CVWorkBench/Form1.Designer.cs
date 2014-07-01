@@ -58,12 +58,14 @@
             this.submitBatchButton = new DevExpress.XtraEditors.SimpleButton();
             this.recipeCompboBox = new DevExpress.XtraEditors.ComboBoxEdit();
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
+            this.onetimeFileNameEdit = new DevExpress.XtraEditors.TextEdit();
             this.outputDirectoryButton = new DevExpress.XtraEditors.SimpleButton();
             this.inputDirectoryButton = new DevExpress.XtraEditors.SimpleButton();
             this.outputDirectoryTextEdit = new DevExpress.XtraEditors.TextEdit();
             this.inputDirectoryEdit = new DevExpress.XtraEditors.TextEdit();
             this.oneTimeButton = new DevExpress.XtraEditors.SimpleButton();
-            this.onetimeFileNameEdit = new DevExpress.XtraEditors.TextEdit();
+            this.rotateResizeButton = new DevExpress.XtraEditors.SimpleButton();
+            this.shrinkButton = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureEdit1.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureEdit2.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.modeComboBox.Properties)).BeginInit();
@@ -80,9 +82,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.recipeCompboBox.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.onetimeFileNameEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.outputDirectoryTextEdit.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.inputDirectoryEdit.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.onetimeFileNameEdit.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureEdit1
@@ -354,11 +356,20 @@
             this.groupControl1.Controls.Add(this.oneTimeButton);
             this.groupControl1.Controls.Add(this.submitBatchButton);
             this.groupControl1.Controls.Add(this.recipeCompboBox);
-            this.groupControl1.Location = new System.Drawing.Point(-3, 424);
+            this.groupControl1.Location = new System.Drawing.Point(-3, 487);
             this.groupControl1.Name = "groupControl1";
             this.groupControl1.Size = new System.Drawing.Size(186, 258);
             this.groupControl1.TabIndex = 35;
             this.groupControl1.Text = "Recipes";
+            // 
+            // onetimeFileNameEdit
+            // 
+            this.onetimeFileNameEdit.EditValue = "Default.jpg";
+            this.onetimeFileNameEdit.Location = new System.Drawing.Point(8, 90);
+            this.onetimeFileNameEdit.Name = "onetimeFileNameEdit";
+            this.onetimeFileNameEdit.Size = new System.Drawing.Size(174, 22);
+            this.onetimeFileNameEdit.TabIndex = 41;
+            this.onetimeFileNameEdit.EditValueChanged += new System.EventHandler(this.onetimeFileNameEdit_EditValueChanged);
             // 
             // outputDirectoryButton
             // 
@@ -401,20 +412,31 @@
             this.oneTimeButton.Text = "One Time";
             this.oneTimeButton.Click += new System.EventHandler(this.oneTimeButton_Click);
             // 
-            // onetimeFileNameEdit
+            // rotateResizeButton
             // 
-            this.onetimeFileNameEdit.EditValue = "Default.jpg";
-            this.onetimeFileNameEdit.Location = new System.Drawing.Point(8, 90);
-            this.onetimeFileNameEdit.Name = "onetimeFileNameEdit";
-            this.onetimeFileNameEdit.Size = new System.Drawing.Size(174, 22);
-            this.onetimeFileNameEdit.TabIndex = 41;
-            this.onetimeFileNameEdit.EditValueChanged += new System.EventHandler(this.onetimeFileNameEdit_EditValueChanged);
+            this.rotateResizeButton.Location = new System.Drawing.Point(12, 417);
+            this.rotateResizeButton.Name = "rotateResizeButton";
+            this.rotateResizeButton.Size = new System.Drawing.Size(152, 23);
+            this.rotateResizeButton.TabIndex = 42;
+            this.rotateResizeButton.Text = "Rotate, Resize";
+            this.rotateResizeButton.Click += new System.EventHandler(this.rotateResizeButton_Click);
+            // 
+            // shrinkButton
+            // 
+            this.shrinkButton.Location = new System.Drawing.Point(12, 446);
+            this.shrinkButton.Name = "shrinkButton";
+            this.shrinkButton.Size = new System.Drawing.Size(152, 23);
+            this.shrinkButton.TabIndex = 43;
+            this.shrinkButton.Text = "Shrink";
+            this.shrinkButton.Click += new System.EventHandler(this.shrinkButton_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1860, 865);
+            this.Controls.Add(this.shrinkButton);
+            this.Controls.Add(this.rotateResizeButton);
             this.Controls.Add(this.groupControl1);
             this.Controls.Add(this.thresholdEdit);
             this.Controls.Add(this.labelControl7);
@@ -461,9 +483,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.recipeCompboBox.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
             this.groupControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.onetimeFileNameEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.outputDirectoryTextEdit.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.inputDirectoryEdit.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.onetimeFileNameEdit.Properties)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -507,6 +529,8 @@
         private DevExpress.XtraEditors.TextEdit inputDirectoryEdit;
         private DevExpress.XtraEditors.SimpleButton oneTimeButton;
         private DevExpress.XtraEditors.TextEdit onetimeFileNameEdit;
+        private DevExpress.XtraEditors.SimpleButton rotateResizeButton;
+        private DevExpress.XtraEditors.SimpleButton shrinkButton;
     }
 }
 

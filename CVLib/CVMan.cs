@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -59,9 +60,7 @@ namespace CVLib
         }
         public Image ModPicBoolean(Image img1, Image img2, CAPI.BooleanMode bmode, bool drawArtifacts)
         {
-            if (img1 == null || img2 == null) return null;
-            String inPath1 = getUPath();
-            img1.Save(inPath1);
+            if (img2 == null) return null;
             String inPath2 = getUPath();
             img2.Save(inPath2);
             String outPath = getUPath();
@@ -72,8 +71,24 @@ namespace CVLib
             else if (bmode == CAPI.BooleanMode.ROTATE_RESIZE)
                 CAPI.ModifyPictureContours(inPath2, outPath, drawArtifacts, 3);
             else
+            {
+                if (img1 == null) return null;
+                String inPath1 = getUPath();
+                img1.Save(inPath1);
                 CAPI.ModifyPictureBool(inPath1, inPath2, outPath, (int)bmode);
+            }
             return System.IO.File.Exists(outPath) ? Image.FromFile(outPath) : null;
+        }
+        public Image ShrinkPic(Image image)
+        {
+            int newWidth = 300; int newHeight = 225;
+            Image newImage = new Bitmap(newWidth, newHeight);
+            using (Graphics graphicsHandle = Graphics.FromImage(newImage))
+            {
+                graphicsHandle.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphicsHandle.DrawImage(image, 0, 0, newWidth, newHeight);
+            }
+            return newImage;
         }
         public Image SnapPic()
         {
