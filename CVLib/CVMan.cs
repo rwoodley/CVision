@@ -81,7 +81,7 @@ namespace CVLib
         }
         public Image ShrinkPic(Image image)
         {
-            int newWidth = 300; int newHeight = 225;
+            int newWidth = 200; int newHeight = 200;
             Image newImage = new Bitmap(newWidth, newHeight);
             using (Graphics graphicsHandle = Graphics.FromImage(newImage))
             {
