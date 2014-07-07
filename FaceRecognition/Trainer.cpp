@@ -105,6 +105,11 @@ extern "C" {
 				Canny(img, outImg, th, th * 3, 3);
 			if (morphMode == 15)
 				threshold(img, outImg, th,255,THRESH_BINARY);
+			if (morphMode == 16) {
+				int h = img.rows; int c = img.cols;
+				copyMakeBorder(img, outImg, kernelSize, kernelSize, kernelSize, kernelSize, BORDER_CONSTANT, 0);
+				resize(outImg, outImg, Size(c, h));
+			}
 		}
 		catch (cv::Exception& e) {
 				cerr << e.msg << endl;

@@ -52,7 +52,8 @@ namespace CVLib
             SCHARRX1 = 12,
             SCHARRY1 = 13,
             CANNY = 14,
-            THRESHOLD = 15
+            THRESHOLD = 15,
+            BORDER = 16
         }
         public enum ImageColor
         {

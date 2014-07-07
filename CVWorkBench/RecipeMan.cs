@@ -11,7 +11,7 @@ namespace CVWorkBench
 {
     class RecipeMan
     {
-        public enum Recipes { TrimImage1, TrimImage2, TrimImage3, TrimImage4, RotateResize, Shrink }
+        public enum Recipes { TrimImage1, TrimImage2, TrimImage3, TrimImage4, RotateResize, Shrink, Not, BlackBorder10PX }
 
         CVLib.CVMan _CVMan;
         public RecipeMan(CVLib.CVMan man)
@@ -34,6 +34,10 @@ namespace CVWorkBench
                     return RotateResize(img1, maskOnly);
                 case Recipes.Shrink:
                     return _CVMan.ShrinkPic(img1);
+                case Recipes.Not:
+                    return _CVMan.ModPicMorph(img1, CAPI.MorphMode.NOT, CAPI.MorphStructureEnum.MORPH_CROSS, 0, 0);
+                case Recipes.BlackBorder10PX:
+                    return _CVMan.ModPicMorph(img1, CAPI.MorphMode.BORDER, CAPI.MorphStructureEnum.MORPH_CROSS, 10, 0);
             }
             throw new NotImplementedException();
         }
